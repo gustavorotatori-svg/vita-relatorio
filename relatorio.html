@@ -1,0 +1,529 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vita Flavors · Painel de Prospecção</title>
+<meta name="theme-color" content="#772A53">
+<style>
+:root{--bg:#FBF6F6;--card:#fff;--ink:#32262C;--muted:#7C6A72;--line:#EADEE4;--brand:#772A53;--brand-dark:#5A1F3E;--brand-soft:#F6E9EF;--accent:#F55600;--danger:#C0392B;--radius:14px;--shadow:0 1px 2px rgba(90,31,62,.06),0 8px 24px rgba(90,31,62,.07)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,'Segoe UI',Arial,sans-serif;color:var(--ink);
+background:radial-gradient(1100px 480px at 18% -8%,#F7E7EE 0%,rgba(251,246,246,0) 55%),radial-gradient(900px 420px at 88% -12%,#FDEDE0 0%,rgba(251,246,246,0) 60%),var(--bg);
+-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:24px 20px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;background:linear-gradient(120deg,#4A1734 0%,#772A53 52%,#A8446F 100%);border-radius:var(--radius);padding:20px 26px;color:#fff;box-shadow:0 10px 30px rgba(90,31,62,.22);position:relative;overflow:hidden}
+.top::after{content:'';position:absolute;right:-60px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(201,138,61,.35),rgba(201,138,61,0) 70%)}
+.top>*{position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:14px}
+.mark{display:block;width:132px;height:46px;background:#fff;border-radius:12px;padding:6px 10px}
+.mark img{display:block;width:100%;height:100%;object-fit:contain}
+.brand h1{margin:0;font-size:22px;letter-spacing:.5px}
+.brand p{margin:2px 0 0;font-size:12.5px;color:#EBCBD9;letter-spacing:.4px}
+.meta{text-align:right;display:flex;flex-direction:column;gap:6px}
+.meta .pill{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:999px;font-size:12px}
+.meta b{color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:18px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--c);border-radius:14px 14px 0 0}
+.kpi .num{font-size:30px;font-weight:800;letter-spacing:-.5px;color:var(--c)}
+.kpi .lbl{font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.3px}
+.kpi .sub{font-size:11px;color:var(--c);font-weight:700;margin-top:2px}
+.kpi.c1{--c:#772A53;background:linear-gradient(180deg,#F8E9EF,#fff 70%)}
+.kpi.c2{--c:#F55600;background:linear-gradient(180deg,#FDEDE1,#fff 70%)}
+.kpi.c3{--c:#123B4A;background:linear-gradient(180deg,#E6EDF0,#fff 70%)}
+.kpi.c4{--c:#FF8A2A;background:linear-gradient(180deg,#FEF0E2,#fff 70%)}
+.kpi.c5{--c:#5A47B8;background:linear-gradient(180deg,#EDEAF9,#fff 70%)}
+.kpi.c6{--c:#00A7B5;background:linear-gradient(180deg,#E2F5F7,#fff 70%)}
+.card{background:var(--card);border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);padding:18px 20px;margin-top:14px}
+.card h2{margin:0 0 14px;font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700}
+.aviso{padding:14px 18px;border-radius:var(--radius);font-size:13.5px;margin-top:14px;border:1px solid var(--line);border-left:5px solid;background:#fff;box-shadow:var(--shadow)}
+.aviso.on{border-left-color:#2E7D32}
+.aviso.off{border-left-color:var(--accent)}
+.quota-grid{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.quota .big{font-size:22px;font-weight:800;color:var(--brand-dark)}
+.quota .bar{height:10px;background:var(--brand-soft);border-radius:999px;overflow:hidden;margin-top:10px}
+.quota .bar i{display:block;height:100%;background:linear-gradient(90deg,#772A53 30%,#F55600 70%,#FF8A2A);border-radius:999px}
+.grid{display:grid;gap:14px;margin-top:14px}
+.grid.two{grid-template-columns:1.3fr 1fr}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+@media(max-width:860px){.grid.two,.grid.three{grid-template-columns:1fr}.top{flex-direction:column;text-align:center}.meta{text-align:center;align-items:center}}
+.funnel-step{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.funnel-label{width:112px;flex:0 0 112px;font-size:12.5px;color:var(--muted);text-align:right}
+.funnel-wrap{flex:1;min-width:0}
+.funnel-bar{height:40px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#fff;font-weight:700;font-size:13.5px;min-width:64px;transition:width .4s}
+.funnel-bar small{font-weight:500;opacity:.9}
+.funnel-pct{width:48px;flex:0 0 48px;font-size:12px;font-weight:700;color:var(--accent)}
+.f1{background:linear-gradient(90deg,#4A1734,#772A53)}
+.f2{background:linear-gradient(90deg,#772A53,#A8446F)}
+.f3{background:linear-gradient(90deg,#F55600,#FF8A2A)}
+.chart{display:flex;align-items:flex-end;gap:4px;height:190px;padding-top:22px;border-bottom:1px solid var(--line)}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.col .val{font-size:8.5px;font-weight:700;color:var(--brand);margin-bottom:3px}
+.col .bar{width:100%;background:linear-gradient(180deg,#A8446F,#772A53);border-radius:3px 3px 0 0}
+.col .bar.recusa{background:linear-gradient(180deg,#FF8A2A,#F55600)}
+.col .dia{font-size:8px;color:var(--muted);margin-top:5px;white-space:nowrap}
+.legenda{display:flex;gap:18px;font-size:11.5px;color:var(--muted);margin-top:12px}
+.legenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.row{display:grid;grid-template-columns:132px 1fr 40px;gap:10px;align-items:center;margin-bottom:9px;font-size:12.5px}
+.row .nm{color:var(--muted);text-transform:capitalize}
+.row .n{text-align:right;font-weight:700}
+.track{height:9px;background:var(--brand-soft);border-radius:999px;overflow:hidden}
+.track i{display:block;height:100%;background:linear-gradient(90deg,#772A53,#A8446F);border-radius:999px}
+.mes{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid #F6EFF2}
+.mes:last-child{border-bottom:0}
+.mes-nome{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:700}
+.mes-num{font-size:26px;font-weight:800;color:var(--brand)}
+.mes-num span{font-size:11px;color:var(--muted);font-weight:600;margin-left:6px}
+.mes-sub{font-size:11.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);border-bottom:1px solid var(--line);padding:8px 10px}
+tbody td{padding:9px 10px;border-bottom:1px solid #F6EFF2}
+tbody tr:hover{background:#FBF4F7}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+td.b{font-weight:700}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:var(--brand-soft);color:var(--brand)}
+.chip.danger{background:#FBE9E4;color:var(--danger)}
+footer{margin-top:18px;text-align:center;color:var(--muted);font-size:12px}
+.nota{font-size:11.5px;color:var(--muted);margin-top:16px}
+</style></head><body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="mark"><img src="data:image/png;base64,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" alt="Vita Flavors"></span>
+      <div>
+        <h1>Painel de Prospecção</h1>
+        <p>Histórico completo · 07/10/2026 a 12/11/2026</p>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="pill">Responsável: <b>Gustavo</b></span>
+      <span class="pill">Atualizado: <b>12/11/2026, 16:08:10</b></span>
+    </div>
+  </header>
+
+  <section class="kpis">
+    <div class="kpi c1"><div class="num">414</div><div class="lbl">e-mails enviados</div><div class="sub">+ histórico completo</div></div>
+    <div class="kpi c2"><div class="num">271</div><div class="lbl">empresas contatadas</div><div class="sub">+ primeira abordagem</div></div>
+    <div class="kpi c3"><div class="num">1.8%</div><div class="lbl">taxa de resposta</div><div class="sub">5 responderam</div></div>
+    <div class="kpi c4"><div class="num">76</div><div class="lbl">na fila</div><div class="sub">47 em SP</div></div>
+    <div class="kpi c5"><div class="num">30</div><div class="lbl">em hold</div><div class="sub">fora da cadência</div></div>
+    <div class="kpi c6"><div class="num">6</div><div class="lbl">bloqueios</div><div class="sub">política 5.7.1</div></div>
+  </section>
+
+  <div class="aviso on"><b>Saída liberada</b> — última atualização 12/11/2026, 16:08:10</div>
+
+  <section class="card quota">
+    <div class="quota-grid">
+      <h2 style="margin:0">Cota de envios · janela móvel de 24h</h2>
+      <span class="big">10 / 10</span>
+    </div>
+    <div class="bar"><i style="width:100%"></i></div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Funil da campanha</h2>
+      <div class="funnel-step">
+        <div class="funnel-label">Contatados</div>
+        <div class="funnel-wrap"><div class="funnel-bar f1" style="width:100%"><span>271</span><small>empresas</small></div></div>
+        <div class="funnel-pct">100%</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-label">Responderam</div>
+        <div class="funnel-wrap"><div class="funnel-bar f2" style="width:8%"><span>5</span><small>retorno</small></div></div>
+        <div class="funnel-pct">1.8%</div>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-label">Pediram amostra</div>
+        <div class="funnel-wrap"><div class="funnel-bar f3" style="width:8%"><span>0</span><small>pedido</small></div></div>
+        <div class="funnel-pct">0%</div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Por mês</h2>
+      <div class="mes"><div class="mes-nome">outubro de 2026</div>
+    <div class="mes-num">265<span>envios</span></div>
+    <div class="mes-sub">164 primeiros contatos · 22 dias com envio</div></div><div class="mes"><div class="mes-nome">novembro de 2026</div>
+    <div class="mes-num">149<span>envios</span></div>
+    <div class="mes-sub">107 primeiros contatos · 11 dias com envio</div></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Evolução diária · 33 dias com envio</h2>
+    <div class="chart"><div class="col" title="07/10/2026 — 7 envios">
+    <span class="val">7</span>
+    <div class="bar" style="height:30%"></div>
+    <span class="dia">07/10</span>
+  </div><div class="col" title="08/10/2026 — 1 envios">
+    <span class="val">1</span>
+    <div class="bar" style="height:4%"></div>
+    <span class="dia">08/10</span>
+  </div><div class="col" title="09/10/2026 — 7 envios">
+    <span class="val">7</span>
+    <div class="bar" style="height:30%"></div>
+    <span class="dia">09/10</span>
+  </div><div class="col" title="10/10/2026 — 13 envios">
+    <span class="val">13</span>
+    <div class="bar" style="height:57%"></div>
+    <span class="dia">10/10</span>
+  </div><div class="col" title="13/10/2026 — 12 envios">
+    <span class="val">12</span>
+    <div class="bar" style="height:52%"></div>
+    <span class="dia">13/10</span>
+  </div><div class="col" title="14/10/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">14/10</span>
+  </div><div class="col" title="15/10/2026 — 6 envios">
+    <span class="val">6</span>
+    <div class="bar" style="height:26%"></div>
+    <span class="dia">15/10</span>
+  </div><div class="col" title="16/10/2026 — 12 envios">
+    <span class="val">12</span>
+    <div class="bar" style="height:52%"></div>
+    <span class="dia">16/10</span>
+  </div><div class="col" title="17/10/2026 — 12 envios">
+    <span class="val">12</span>
+    <div class="bar" style="height:52%"></div>
+    <span class="dia">17/10</span>
+  </div><div class="col" title="18/10/2026 — 16 envios">
+    <span class="val">16</span>
+    <div class="bar" style="height:70%"></div>
+    <span class="dia">18/10</span>
+  </div><div class="col" title="19/10/2026 — 16 envios">
+    <span class="val">16</span>
+    <div class="bar" style="height:70%"></div>
+    <span class="dia">19/10</span>
+  </div><div class="col" title="20/10/2026 — 2 envios">
+    <span class="val">2</span>
+    <div class="bar" style="height:9%"></div>
+    <span class="dia">20/10</span>
+  </div><div class="col" title="21/10/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">21/10</span>
+  </div><div class="col" title="22/10/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">22/10</span>
+  </div><div class="col" title="23/10/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">23/10</span>
+  </div><div class="col" title="24/10/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">24/10</span>
+  </div><div class="col" title="25/10/2026 — 7 envios">
+    <span class="val">7</span>
+    <div class="bar" style="height:30%"></div>
+    <span class="dia">25/10</span>
+  </div><div class="col" title="26/10/2026 — 10 envios">
+    <span class="val">10</span>
+    <div class="bar" style="height:43%"></div>
+    <span class="dia">26/10</span>
+  </div><div class="col" title="27/10/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">27/10</span>
+  </div><div class="col" title="28/10/2026 — 9 envios">
+    <span class="val">9</span>
+    <div class="bar" style="height:39%"></div>
+    <span class="dia">28/10</span>
+  </div><div class="col" title="30/10/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">30/10</span>
+  </div><div class="col" title="31/10/2026 — 9 envios">
+    <span class="val">9</span>
+    <div class="bar" style="height:39%"></div>
+    <span class="dia">31/10</span>
+  </div><div class="col" title="02/11/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">02/11</span>
+  </div><div class="col" title="03/11/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">03/11</span>
+  </div><div class="col" title="04/11/2026 — 9 envios">
+    <span class="val">9</span>
+    <div class="bar" style="height:39%"></div>
+    <span class="dia">04/11</span>
+  </div><div class="col" title="05/11/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">05/11</span>
+  </div><div class="col" title="06/11/2026 — 6 envios">
+    <span class="val">6</span>
+    <div class="bar" style="height:26%"></div>
+    <span class="dia">06/11</span>
+  </div><div class="col" title="07/11/2026 — 23 envios">
+    <span class="val">23</span>
+    <div class="bar" style="height:100%"></div>
+    <span class="dia">07/11</span>
+  </div><div class="col" title="08/11/2026 — 20 envios">
+    <span class="val">20</span>
+    <div class="bar" style="height:87%"></div>
+    <span class="dia">08/11</span>
+  </div><div class="col" title="09/11/2026 — 5 envios">
+    <span class="val">5</span>
+    <div class="bar" style="height:22%"></div>
+    <span class="dia">09/11</span>
+  </div><div class="col" title="10/11/2026 — 18 envios">
+    <span class="val">18</span>
+    <div class="bar" style="height:78%"></div>
+    <span class="dia">10/11</span>
+  </div><div class="col" title="11/11/2026 — 4 envios">
+    <span class="val">4</span>
+    <div class="bar" style="height:17%"></div>
+    <span class="dia">11/11</span>
+  </div><div class="col" title="12/11/2026 — 10 envios">
+    <span class="val">10</span>
+    <div class="bar" style="height:43%"></div>
+    <span class="dia">12/11</span>
+  </div></div>
+    <div class="legenda">
+      <span><i style="background:linear-gradient(180deg,#A8446F,#772A53)"></i>enviados</span>
+      <span><i style="background:linear-gradient(180deg,#FF8A2A,#F55600)"></i>dia com recusa do provedor</span>
+    </div>
+  </section>
+
+  <section class="grid three">
+    <div class="card"><h2>Segmentos da base</h2>
+  <div class="row"><div class="nm">fabrica alimentos</div>
+    <div class="track"><i style="width:100%"></i></div>
+    <div class="n">177</div></div>
+  <div class="row"><div class="nm">padaria</div>
+    <div class="track"><i style="width:27%"></i></div>
+    <div class="n">47</div></div>
+  <div class="row"><div class="nm">industria panificacao</div>
+    <div class="track"><i style="width:19%"></i></div>
+    <div class="n">34</div></div>
+  <div class="row"><div class="nm">fabrica biscoitos</div>
+    <div class="track"><i style="width:17%"></i></div>
+    <div class="n">30</div></div>
+  <div class="row"><div class="nm">cervejaria</div>
+    <div class="track"><i style="width:14%"></i></div>
+    <div class="n">25</div></div>
+  <div class="row"><div class="nm">industria bebidas</div>
+    <div class="track"><i style="width:11%"></i></div>
+    <div class="n">19</div></div>
+  <div class="row"><div class="nm">destilaria</div>
+    <div class="track"><i style="width:9%"></i></div>
+    <div class="n">16</div></div>
+  <div class="row"><div class="nm">industria sucos</div>
+    <div class="track"><i style="width:6%"></i></div>
+    <div class="n">11</div></div>
+  <div class="row"><div class="nm">microcervejaria</div>
+    <div class="track"><i style="width:6%"></i></div>
+    <div class="n">11</div></div></div>
+    <div class="card"><h2>Distribuição por estado</h2>
+  <div class="row"><div class="nm">SP</div>
+    <div class="track"><i style="width:100%"></i></div>
+    <div class="n">203</div></div>
+  <div class="row"><div class="nm">?</div>
+    <div class="track"><i style="width:28%"></i></div>
+    <div class="n">56</div></div>
+  <div class="row"><div class="nm">MG</div>
+    <div class="track"><i style="width:14%"></i></div>
+    <div class="n">29</div></div>
+  <div class="row"><div class="nm">RS</div>
+    <div class="track"><i style="width:11%"></i></div>
+    <div class="n">22</div></div>
+  <div class="row"><div class="nm">PR</div>
+    <div class="track"><i style="width:8%"></i></div>
+    <div class="n">17</div></div>
+  <div class="row"><div class="nm">SC</div>
+    <div class="track"><i style="width:7%"></i></div>
+    <div class="n">15</div></div>
+  <div class="row"><div class="nm">RJ</div>
+    <div class="track"><i style="width:4%"></i></div>
+    <div class="n">8</div></div>
+  <div class="row"><div class="nm">CE</div>
+    <div class="track"><i style="width:3%"></i></div>
+    <div class="n">7</div></div>
+  <div class="row"><div class="nm">PE</div>
+    <div class="track"><i style="width:3%"></i></div>
+    <div class="n">7</div></div>
+  <div class="row"><div class="nm">BA</div>
+    <div class="track"><i style="width:3%"></i></div>
+    <div class="n">6</div></div></div>
+  </section>
+
+  <section class="card">
+    <h2>Histórico diário</h2>
+    <table>
+      <thead><tr><th>Dia</th><th class="n">E-mail 1</th><th class="n">Follow-ups</th><th class="n">Respostas quentes</th><th class="n">Total</th></tr></thead>
+      <tbody>
+  <tr>
+    <td>12/11/2026</td>
+    <td class="n">9</td><td class="n">0</td><td class="n">1</td>
+    <td class="n b">10</td>
+  </tr>
+  <tr>
+    <td>11/11/2026</td>
+    <td class="n">4</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">4</td>
+  </tr>
+  <tr>
+    <td>10/11/2026</td>
+    <td class="n">16</td><td class="n">0</td><td class="n">2</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>09/11/2026</td>
+    <td class="n">5</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">5</td>
+  </tr>
+  <tr>
+    <td>08/11/2026</td>
+    <td class="n">10</td><td class="n">10</td><td class="n">0</td>
+    <td class="n b">20</td>
+  </tr>
+  <tr>
+    <td>07/11/2026</td>
+    <td class="n">23</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">23</td>
+  </tr>
+  <tr>
+    <td>06/11/2026</td>
+    <td class="n">5</td><td class="n">1</td><td class="n">0</td>
+    <td class="n b">6</td>
+  </tr>
+  <tr>
+    <td>05/11/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>04/11/2026</td>
+    <td class="n">2</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">9</td>
+  </tr>
+  <tr>
+    <td>03/11/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>02/11/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>31/10/2026</td>
+    <td class="n">2</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">9</td>
+  </tr>
+  <tr>
+    <td>30/10/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>28/10/2026</td>
+    <td class="n">2</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">9</td>
+  </tr>
+  <tr>
+    <td>27/10/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>26/10/2026</td>
+    <td class="n">3</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">10</td>
+  </tr>
+  <tr>
+    <td>25/10/2026</td>
+    <td class="n">0</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">7</td>
+  </tr>
+  <tr>
+    <td>24/10/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>23/10/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>22/10/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>21/10/2026</td>
+    <td class="n">11</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>20/10/2026</td>
+    <td class="n">0</td><td class="n">2</td><td class="n">0</td>
+    <td class="n b">2</td>
+  </tr>
+  <tr>
+    <td>19/10/2026</td>
+    <td class="n">10</td><td class="n">6</td><td class="n">0</td>
+    <td class="n b">16</td>
+  </tr>
+  <tr>
+    <td>18/10/2026</td>
+    <td class="n">6</td><td class="n">10</td><td class="n">0</td>
+    <td class="n b">16</td>
+  </tr>
+  <tr>
+    <td>17/10/2026</td>
+    <td class="n">7</td><td class="n">5</td><td class="n">0</td>
+    <td class="n b">12</td>
+  </tr>
+  <tr>
+    <td>16/10/2026</td>
+    <td class="n">12</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">12</td>
+  </tr>
+  <tr>
+    <td>15/10/2026</td>
+    <td class="n">6</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">6</td>
+  </tr>
+  <tr>
+    <td>14/10/2026</td>
+    <td class="n">18</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">18</td>
+  </tr>
+  <tr>
+    <td>13/10/2026</td>
+    <td class="n">12</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">12</td>
+  </tr>
+  <tr>
+    <td>10/10/2026</td>
+    <td class="n">12</td><td class="n">1</td><td class="n">0</td>
+    <td class="n b">13</td>
+  </tr>
+  <tr>
+    <td>09/10/2026</td>
+    <td class="n">0</td><td class="n">7</td><td class="n">0</td>
+    <td class="n b">7</td>
+  </tr>
+  <tr>
+    <td>08/10/2026</td>
+    <td class="n">1</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">1</td>
+  </tr>
+  <tr>
+    <td>07/10/2026</td>
+    <td class="n">7</td><td class="n">0</td><td class="n">0</td>
+    <td class="n b">7</td>
+  </tr></tbody>
+    </table>
+  </section>
+
+  <p class="nota">Somente números agregados. Nenhum dado de lead (nome, e-mail, telefone) é publicado.</p>
+  <footer>Vita Flavors · (11) 94222-1028 · relatório automático</footer>
+</div>
+</body></html>
